@@ -56,7 +56,8 @@ class Jd_Mask_Spider(object):
             'User-Agent': self.default_user_agent,
             'Referer': 'https://item.jd.com/{}.html'.format(self.sku_id),
         }
-        resp = self.session.get(url=url, params=payload, headers=headers)
+        resp = self.session.get(url=url, params=payload, headers=headers).enconde("utf-8","ignore")
+        print(resp.text)
         resp_json = parse_json(resp.text)
         reserve_url = resp_json.get('url')
         self.timers.start()
@@ -83,7 +84,8 @@ class Jd_Mask_Spider(object):
             'Referer': 'https://order.jd.com/center/list.action',
         }
         try:
-            resp = self.session.get(url=url, params=payload, headers=headers)
+            resp = self.session.get(url=url, params=payload, headers=headers).enconde("utf-8","ignore")
+            print(resp.text)
             resp_json = parse_json(resp.text)
             # 响应中包含了许多用户信息，现在在其中返回昵称
             # jQuery2381773({"imgUrl":"//storage.360buyimg.com/i.imageUpload/xxx.jpg","lastLoginTime":"","nickName":"xxx","plusStatus":"0","realName":"xxx","userLevel":x,"userScoreVO":{"accountScore":xx,"activityScore":xx,"consumptionScore":xxxxx,"default":false,"financeScore":xxx,"pin":"xxx","riskScore":x,"totalScore":xxxxx}})
@@ -174,7 +176,8 @@ class Jd_Mask_Spider(object):
             'User-Agent': self.default_user_agent,
             'Host': 'marathon.jd.com',
         }
-        resp = self.session.post(url=url, data=data, headers=headers)
+        resp = self.session.post(url=url, data=data, headers=headers).enconde("utf-8","ignore")
+        print(resp.text)
         return parse_json(resp.text)
 
     def _get_seckill_order_data(self):
@@ -247,7 +250,8 @@ class Jd_Mask_Spider(object):
             params=payload,
             data=self.seckill_order_data.get(
                 self.sku_id),
-            headers=headers)
+            headers=headers).enconde("utf-8","ignore")
+        print(resp.text)
         resp_json = parse_json(resp.text)
         # 返回信息
         # 抢购失败：
